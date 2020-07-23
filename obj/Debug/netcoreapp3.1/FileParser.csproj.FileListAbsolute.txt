@@ -1,0 +1,13 @@
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.exe
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.deps.json
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.runtimeconfig.json
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.runtimeconfig.dev.json
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.dll
+C:\Users\i00018\source\repos\FileParser\bin\Debug\netcoreapp3.1\FileParser.pdb
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.csprojAssemblyReference.cache
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.AssemblyInfoInputs.cache
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.AssemblyInfo.cs
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.csproj.CoreCompileInputs.cache
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.dll
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.pdb
+C:\Users\i00018\source\repos\FileParser\obj\Debug\netcoreapp3.1\FileParser.genruntimeconfig.cache
