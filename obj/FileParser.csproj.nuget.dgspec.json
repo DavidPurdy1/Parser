@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj": {}
+    "C:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj": {}
   },
   "projects": {
-    "c:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj": {
+    "C:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj",
+        "projectUniqueName": "C:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj",
         "projectName": "FileParser",
-        "projectPath": "c:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj",
+        "projectPath": "C:\\Users\\i00018\\source\\repos\\FileParser\\FileParser.csproj",
         "packagesPath": "C:\\Users\\i00018\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\i00018\\source\\repos\\FileParser\\obj\\",
+        "outputPath": "C:\\Users\\i00018\\source\\repos\\FileParser\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\i00018\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -38,6 +38,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
               "version": "[4.7.0, )"
