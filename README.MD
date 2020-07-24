@@ -1,3 +1,4 @@
-# TODO: Only add the ones that haven't been added yet because that will cause duplicate data.. 
+# Automated tests results parser
 
-# TODO: Add so it will add to more tables, just copy paste and change values, and then adding some to the test data class. 
+-This has to be ran after the tests are ran for the data to show up in the database
+-After will move the documents to another folder that is specified in the config under the unique test number. 

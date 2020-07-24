@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 namespace FileParser{
     class Program{
         static void Main(string[] args){
+            Console.WriteLine("Program Started");
+            Console.WriteLine(" ");
             var connectionString = ConfigurationManager.AppSettings.Get("DBConnection"); 
             SqlConnection connection = new SqlConnection(connectionString); 
 
@@ -40,18 +42,39 @@ namespace FileParser{
             command.Parameters.Add("createdDate", SqlDbType.DateTime).Value = data.CreatedDate;
             command.Parameters.Add("createdBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
             command.Parameters.Add("modifiedBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
-            command.Parameters.Add("modifiedDate", SqlDbType.DateTime, 50).Value = data.CreatedDate;
+            command.Parameters.Add("modifiedDate", SqlDbType.DateTime, 50).Value = data.CreatedDate; 
 
             command.ExecuteNonQuery();
+            data.TestRunId = int.Parse(command.ExecuteScalar().ToString())-1;
             connection.Close();
+        }
+        public void AddToTestCaseTable(TestData data, SqlConnection connection){
+            //running the command
+            SqlCommand command = new SqlCommand();
+            connection.Open();
+            command.CommandTimeout = 60;
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "spAddTestCaseData";
+
+            //adding the values to the parameter
+            command.Parameters.Add("testName", SqlDbType.NVarChar, 50).Value = data.CreatedBy;  
+            command.Parameters.Add("testStatusId", SqlDbType.BigInt).Value = data.TestStatus;
+            command.Parameters.Add("testDate", SqlDbType.DateTime, 50).Value = data.CreatedDate;
+            command.Parameters.Add("imagePath", SqlDbType.NVarChar, 256).Value = data.ImagePath;
+            command.Parameters.Add("createdDate", SqlDbType.DateTime).Value = data.CreatedDate;
+            command.Parameters.Add("createdBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
+            command.Parameters.Add("modifiedBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
+            command.Parameters.Add("modifiedDate", SqlDbType.DateTime, 50).Value = data.CreatedDate;
+            command.Parameters.Add("testRunId", SqlDbType.BigInt, 50).Value = data.TestRunId;
+            
+            command.ExecuteNonQuery();
+            connection.Close(); 
         }
         public void ParseFile(TestData data, SqlConnection connection){
             foreach(string file in Directory.EnumerateFiles(ConfigurationManager.AppSettings.Get("FileLocation"))){
-                Console.WriteLine(file);
                 string[] lines = File.ReadAllLines(file);
-                foreach(var line in lines){
-                     Console.WriteLine(line);
-                }
+                
                 
                 data.CreatedDate = DateTime.Parse(lines[1].Substring(0, lines[1].Length-2));
                 data.TestsPassed = int.Parse(lines[2].Substring(14)); 
@@ -60,16 +83,24 @@ namespace FileParser{
                 data.ApplicationVersion = lines[5].Substring(13); 
                 data.ApplicationName = lines[6].Substring(10); 
 
-                data.TestsPassed = 0; 
-                data.TestsFailed = 0; 
-                for (int i = 7; i < lines.Length; i++){
-                    if(lines[i].Substring(0,8).Equals("passed| ")){
-                        data.TestsPassed++; 
-                    }else{
-                        data.TestsFailed++; 
-                    } 
-                }
                 AddToTestRunTable(data, connection);
+
+                int i = 7;  
+                while(i < lines.Length){
+                    data.TestName = lines[i].Substring(8); 
+                    
+                    if(lines[i].Substring(0,8).Equals("passed| ")){
+                        data.TestStatus = 1;
+                        data.ImagePath = null; 
+                        i++;
+                    }else{
+                        data.TestStatus = 0;
+                        data.ImagePath = lines[i+1];
+                        i +=2;
+                    } 
+                    AddToTestCaseTable(data, connection);
+                }
+                File.Move(file, ConfigurationManager.AppSettings.Get("ReadFileLocation") + "Test " + data.TestRunId.ToString()+".txt"); 
             }
         }
     }
@@ -78,8 +109,11 @@ namespace FileParser{
         public int TestsPassed { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string ImageLocation { get; set; }
+        public string ImagePath { get; set; }
         public string ApplicationName{ get; set; }
         public string ApplicationVersion { get; set; }
+        public string TestName{ get; set; }
+        public int TestStatus{ get; set; }
+        public int TestRunId{ get; set; }
     } 
 }
