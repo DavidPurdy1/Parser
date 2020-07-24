@@ -10,18 +10,15 @@ using System.Data.SqlClient;
 namespace FileParser{
     class Program{
         static void Main(string[] args){
-            Console.WriteLine("Program Started");
-            Console.WriteLine(" ");
             var connectionString = ConfigurationManager.AppSettings.Get("DBConnection"); 
             SqlConnection connection = new SqlConnection(connectionString); 
 
             TestData data = new TestData();
             new Parser().ParseFile(data, connection); 
-
-            Console.WriteLine("Press any key to exit.");
-            System.Console.ReadKey();
         }        
     }
+
+    
     public class Parser{
          public void AddToTestRunTable(TestData data, SqlConnection connection){
 
@@ -45,7 +42,7 @@ namespace FileParser{
             command.Parameters.Add("modifiedDate", SqlDbType.DateTime, 50).Value = data.CreatedDate; 
 
             command.ExecuteNonQuery();
-            data.TestRunId = int.Parse(command.ExecuteScalar().ToString())-1;
+            data.TestRunId = int.Parse(command.ExecuteScalar().ToString()); 
             connection.Close();
         }
         public void AddToTestCaseTable(TestData data, SqlConnection connection){
@@ -66,7 +63,7 @@ namespace FileParser{
             command.Parameters.Add("createdBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
             command.Parameters.Add("modifiedBy", SqlDbType.NVarChar, 50).Value = data.CreatedBy;
             command.Parameters.Add("modifiedDate", SqlDbType.DateTime, 50).Value = data.CreatedDate;
-            command.Parameters.Add("testRunId", SqlDbType.BigInt, 50).Value = data.TestRunId;
+            command.Parameters.Add("testRunId", SqlDbType.BigInt, 50).Value = data.TestRunId-1;
             
             command.ExecuteNonQuery();
             connection.Close(); 
@@ -100,7 +97,7 @@ namespace FileParser{
                     } 
                     AddToTestCaseTable(data, connection);
                 }
-                File.Move(file, ConfigurationManager.AppSettings.Get("ReadFileLocation") + "Test " + data.TestRunId.ToString()+".txt"); 
+                File.Move(file, ConfigurationManager.AppSettings.Get("ReadFileLocation") + "Test " + (data.TestRunId-1).ToString()+".txt"); 
             }
         }
     }
