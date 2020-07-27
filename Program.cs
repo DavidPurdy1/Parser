@@ -55,7 +55,7 @@ namespace FileParser{
             command.CommandText = "spAddTestCaseData";
 
             //adding the values to the parameter
-            command.Parameters.Add("testName", SqlDbType.NVarChar, 50).Value = data.CreatedBy;  
+            command.Parameters.Add("testName", SqlDbType.NVarChar, 50).Value = data.TestName;  
             command.Parameters.Add("testStatusId", SqlDbType.BigInt).Value = data.TestStatus;
             command.Parameters.Add("testDate", SqlDbType.DateTime, 50).Value = data.CreatedDate;
             command.Parameters.Add("imagePath", SqlDbType.NVarChar, 256).Value = data.ImagePath;
